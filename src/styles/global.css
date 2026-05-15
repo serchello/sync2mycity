@@ -1,0 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&family=DM+Mono&display=swap');
+ 
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: #eaf0f7;
+  font-family: 'Open Sans', sans-serif;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #f0f4f8; }
+::-webkit-scrollbar-thumb { background: #b0c0d0; border-radius: 6px; }
+
+/* Layout */
+.layout        { display: flex; flex-direction: column; height: 100vh; }
+.layout__body  { display: flex; flex: 1; overflow: hidden; }
+
+/* Sidebar */
+.sidebar       { display: flex; flex-direction: column; width: 171px; flex-shrink: 0;
+                 background: rgba(0, 119, 162, 0.2);
+                 border-right: 1px solid #c5d5e5; }
+
+/* Main content */
+.main-content  { flex: 1; min-width: 0; overflow-y: auto; overflow-x: hidden; padding: 28px 32px; }
+
+/* Cards grid */
+.cards-grid    { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+
+/* Topbar */
+.desktop-user  { display: flex; }
+.hamburger     { display: none; }
+
+/* ── Responsive ─────────────────────────────── */
+@media (max-width: 768px) {
+  .sidebar        { display: none !important; }
+  .main-content   { padding: 16px !important; }
+  .cards-grid     { grid-template-columns: 1fr !important; }
+  .desktop-user   { display: none !important; }
+  .hamburger      { display: flex !important; }
+}
