@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface RequestItem {
   title: string;
@@ -82,6 +83,7 @@ const DATA: RequestGroup[] = [
 const ALL_CATEGORIES = ["Όλες", ...Array.from(new Set(DATA.map((g) => g.category)))];
 
 export default function NewRequest() {
+  const navigate = useNavigate();
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("Όλες");
   const [collapsed, setCollapsed] = useState<Record<string, boolean>>({});
@@ -230,6 +232,7 @@ export default function NewRequest() {
                                transition: "background 0.15s" }}
                       onMouseEnter={(e) => (e.currentTarget.style.background = "#005f82")}
                       onMouseLeave={(e) => (e.currentTarget.style.background = "#0077a2")}
+                      onClick={() => navigate(`/new-request/${encodeURIComponent(item.title)}`)}
                     >
                       ΝΕΑ ΑΙΤΗΣΗ
                     </button>
