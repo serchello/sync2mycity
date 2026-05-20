@@ -71,7 +71,7 @@ textarea {
   min-width: 0;
   overflow-y: auto;
   overflow-x: hidden;
-  padding: 28px 32px;
+  padding: 24px 28px;
 }
 
 /* Topbar */
@@ -91,7 +91,7 @@ textarea {
   justify-content: space-between;
   align-items: center;
   gap: 16px;
-  margin-bottom: 24px;
+  margin-bottom: 12px;
 }
 
 .new-request-btn {
@@ -256,7 +256,7 @@ textarea {
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  margin-bottom: 20px;
+  margin-bottom: 12px;
 }
 
 .cert-tabs {
