@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import HeaderTitle from "../ui/HeaderTitle";
+
 
 type StatusType =
   | "Submitted"
@@ -127,10 +129,10 @@ export default function Certificates() {
       {/* Page title + tabs */}
       <div style={{ display: "flex", alignItems: "center",
                     justifyContent: "space-between", marginBottom: 20 }}>
-        <h2 style={{ fontWeight: 700, fontSize: 16, letterSpacing: 2,
-                     color: "#1a2d3d", textTransform: "uppercase" }}>
-          Πιστοποιητικά
-        </h2>
+
+        <HeaderTitle title="Πιστοποιητικά" />
+
+
         <div style={{ display: "flex", gap: 4 }}>
           {(["active", "completed"] as const).map((t) => (
             <button

@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import HeaderTitle from "../ui/HeaderTitle";
+
 
 interface RequestItem {
   title: string;
@@ -107,11 +109,7 @@ export default function NewRequest() {
   return (
     <div className="main-content">
 
-      {/* Title */}
-      <h2 style={{ fontWeight: 700, fontSize: 16, letterSpacing: 2,
-                   color: "#0077a2", textTransform: "uppercase", marginBottom: 16 }}>
-        Διαθέσιμες Αιτήσεις
-      </h2>
+      <HeaderTitle title="Διαθέσιμες Αιτήσεις" />
 
       {/* Search + filter row */}
       <div style={{ display: "flex", gap: 12, marginBottom: 20 }}>

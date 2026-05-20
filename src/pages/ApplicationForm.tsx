@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Upload } from "lucide-react";
+import HeaderTitle from "../ui/HeaderTitle";
 
 export default function ApplicationForm() {
   const navigate = useNavigate();
@@ -39,6 +40,7 @@ export default function ApplicationForm() {
                        color: "#1a2d3d", textTransform: "uppercase" }}>
             Αίτηση Ειδικής Άδειας Στάθμευσης
           </h2>
+          <HeaderTitle title="Αίτηση Ειδικής Άδειας Στάθμευσης" />
           <button style={{ background: "#e8f4f8", border: "none", borderRadius: 6,
                            padding: 8, cursor: "pointer", color: "#0077a2" }}>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none"

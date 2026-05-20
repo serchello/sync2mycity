@@ -27,105 +27,34 @@ export default function Card({ card, index }: Props) {
     >
       {/* TOP */}
       <div>
-        <div
-          style={{
-            marginTop: 2,
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            gap: 12,
-            minHeight: 18,
-          }}
-        >
+        <div style={{ marginTop: 2,display: "flex", justifyContent: "space-between", alignItems: "center",
+            gap: 12, minHeight: 18,}}>
           {/* LEFT */}
-          <div
-            style={{
-              flex: 1,
-              minWidth: 0,
-            }}
-          >
-            <div
-              style={{
-                fontSize: 16,
-                fontWeight: 600,
-                color: "#1d232f",
-                lineHeight: 1.3,
-                marginBottom: 6,
-              }}
-            >
+          <div style={{ flex: 1, minWidth: 0}}>
+            <div style={{ fontSize: 16, fontWeight: 600,color: "#1d232f", lineHeight: 1.3,marginBottom: 6}}>
               {card.title}
             </div>
-
-            {/* <div
-              style={{
-                fontSize: 12,
-                color: "#7c8795",
-                whiteSpace: "nowrap",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-              }}
-            >
-              {card.description || ""}
-            </div> */}
           </div>
-
-          {/* STATUS */}
           <StatusBadge status={card.status} />
         </div>
 
         {/* META */}
-        <div
-          style={{
-            marginTop: 10,
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            gap: 12,
-            minHeight: 22,
-          }}
-        >
+        <div style={{ marginTop: 10, display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12, minHeight: 22}}>
           {/* LEFT SIDE */}
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: 8,
-              flexWrap: "wrap",
-              minWidth: 0,
-            }}
-          >
+          <div style={{ display:"flex",alignItems:"center",gap: 8,flexWrap:"wrap", minWidth: 0}}>
             {card.amount && (
-              <span
-                style={{
-                  fontSize: 14,
-                  fontWeight: 700,
-                  color: "#1d232f",
-                }}
-              >
+              <span style={{ fontSize: 14,fontWeight: 700,color: "#1d232f" }}>
                 {card.amount}
               </span>
             )}
 
             {card.deadline && (
-              <span
-                style={{
-                  fontSize: 14,
-                  color: "#252830BF",
-                }}
-              >
+              <span style={{ fontSize: 14, color: "#252830BF"}}>
                 Προθεσμία {card.deadline}
               </span>
             )}
 
-            <div
-              style={{
-                fontSize: 14,
-                color: "#7c8795",
-                whiteSpace: "nowrap",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-              }}
-            >
+            <div style={{ fontSize: 14, color: "#7c8795", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis"}}>
               {card.description || ""}
             </div>
           </div>

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { CARDS } from "../constants/data";
 import Card from "../components/Card";
 import { CirclePlus } from "lucide-react";
+import HeaderTitle from "../ui/HeaderTitle";
 
 export default function Dashboard() {
   const [btnHovered, setBtnHovered] = useState(false);
@@ -11,10 +12,9 @@ export default function Dashboard() {
 
       {/* Page header */}
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24 }}>
-        <h2 style={{ fontWeight: 700, fontSize: 18, letterSpacing: 2.5, color: "#1a2d3d", textTransform: "uppercase" }}>
-          Τελευταίες Ενημερώσεις
-        </h2>
-
+        
+        <HeaderTitle title="Τελευταίες Ενημερώσεις" />
+        
         <button
           style={{
             display: "flex",
