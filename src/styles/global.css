@@ -57,14 +57,6 @@ textarea {
   overflow: hidden;
 }
 
-.sidebar {
-  display: flex;
-  flex-direction: column;
-  width: 171px;
-  flex-shrink: 0;
-  background: rgba(0, 119, 162, 0.2);
-  border-right: 1px solid #c5d5e5;
-}
 
 .main-content {
   flex: 1;
@@ -493,10 +485,6 @@ textarea {
 /* Mobile */
 
 @media (max-width: 768px) {
-  .sidebar {
-    display: none !important;
-  }
-
   .main-content {
     padding: 16px !important;
   }

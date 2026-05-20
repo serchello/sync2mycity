@@ -1,0 +1,159 @@
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  width: 171px;
+  flex-shrink: 0;
+  border-right: 1px solid #c5d5e5;
+  background: rgba(0, 119, 162, 0.2);
+}
+
+.sidebar-mobile-header {
+  display: none;
+}
+
+
+.sidebar-mobile-logo {
+  height: 34px;
+  width: auto;
+  object-fit: contain;
+}
+
+
+.sidebar-mobile-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.sidebar-mobile-brand img {
+  height: 30px;
+  width: auto;
+  object-fit: contain;
+}
+
+.sidebar-mobile-brand span {
+  color: #0077a2;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+}
+
+.sidebar-close-btn {
+ width: 34px;
+  height: 34px;
+  border: none;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.16);
+  color: #fff;
+  cursor: pointer;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+
+.sidebar-close-btn:hover {
+  background: rgba(0, 119, 162, 0.18);
+}
+
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  width: 100%;
+  padding: 11px 14px;
+  border: none;
+  border-left: 3px solid transparent;
+  background: transparent;
+  color: #3a5068;
+  font-size: 13px;
+  font-weight: 400;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+
+.sidebar-item--active {
+  background: #0077A2;
+  border-left-color: #1565c0;
+  color: #ececed;
+  font-weight: 600;
+}
+
+.sidebar-item__label {
+  flex: 1;
+}
+
+.sidebar-item__badge {
+  background: #e53935;
+  color: #fff;
+  border-radius: 10px;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 1px 6px;
+}
+
+.sidebar-backdrop {
+  display: none;
+}
+
+/* Mobile drawer */
+@media (max-width: 768px) {
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1001;
+
+    width: 240px;
+    height: 100vh;
+
+    display: flex !important;
+    flex-direction: column;
+
+    transform: translateX(-100%);
+    transition: transform 0.22s ease;
+
+    background: #d7edf5;
+    border-right: 1px solid #c5d5e5;
+    box-shadow: 4px 0 18px rgba(0, 0, 0, 0.18);
+  }
+
+  .sidebar--open {
+    transform: translateX(0);
+  }
+
+  .sidebar-mobile-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    min-height: 67px;
+    padding: 0 14px;
+
+    background: #0077a2;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  }
+
+  .sidebar-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+
+    display: block;
+    border: none;
+    background: rgba(0, 0, 0, 0.35);
+    cursor: pointer;
+  }
+
+  .sidebar-item {
+    padding: 13px 16px;
+    font-size: 13px;
+  }
+}
