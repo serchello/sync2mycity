@@ -1,7 +1,16 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Folder } from "lucide-react";
+import HeaderTitle from "../ui/HeaderTitle";
+import ActionButton, { type ActionButtonType } from "../components/ActionButton";
+import "../styles/Debts.css";
 
-type DebtStatus = "Paid" | "Submitted" | "In Progress" | "Pending Info" | "Pending Payment";
+type DebtStatus =
+  | "Paid"
+  | "Submitted"
+  | "In Progress"
+  | "Pending Info"
+  | "Pending Payment";
 
 interface DebtItem {
   id: string;
@@ -11,55 +20,72 @@ interface DebtItem {
   amountHighlight?: boolean;
   ref: string;
   status: DebtStatus;
-  action: "receipt" | "view" | "pay";
+  action: Extract<ActionButtonType, "receipt" | "view" | "pay">;
   completed?: boolean;
 }
 
-const STATUS_STYLE: Record<DebtStatus, { bg: string; color: string }> = {
-  Paid:              { bg: "#2e7d32", color: "#fff" },
-  Submitted:         { bg: "#1565c0", color: "#fff" },
-  "In Progress":     { bg: "#6a1b9a", color: "#fff" },
-  "Pending Info":    { bg: "#e65100", color: "#fff" },
-  "Pending Payment": { bg: "#e65100", color: "#fff" },
-};
-
 const ALL_ITEMS: DebtItem[] = [
   {
-    id: "657224", type: "Τέλος Φωτισμού",     deadline: "20.12.2025",
-    amount: "18.27 €", amountHighlight: true,
-    ref: "RF231862850275937501875992", status: "Paid",
-    action: "receipt", completed: true,
+    id: "657224",
+    type: "Τέλος Φωτισμού",
+    deadline: "20.12.2025",
+    amount: "18.27 €",
+    amountHighlight: true,
+    ref: "RF231862850275937501875992",
+    status: "Paid",
+    action: "receipt",
+    completed: true,
   },
   {
-    id: "657224", type: "Τέλος Κυκλοφορίας",  deadline: "20.12.2025",
+    id: "657225",
+    type: "Τέλος Κυκλοφορίας",
+    deadline: "20.12.2025",
     amount: "258.63 €",
-    ref: "RF231862850275937501875992", status: "Submitted",
-    action: "view", completed: false,
+    ref: "RF231862850275937501875992",
+    status: "Submitted",
+    action: "view",
+    completed: false,
   },
   {
-    id: "657224", type: "Δημοτικό Τέλος",     deadline: "20.12.2025",
+    id: "657226",
+    type: "Δημοτικό Τέλος",
+    deadline: "20.12.2025",
     amount: "28.06 €",
-    ref: "RF231862850275937501875992", status: "In Progress",
-    action: "view", completed: false,
+    ref: "RF231862850275937501875992",
+    status: "In Progress",
+    action: "view",
+    completed: false,
   },
   {
-    id: "657224", type: "Τέλος Στάθμευσης",   deadline: "20.12.2025",
-    amount: "71.42€",
-    ref: "RF231862850275937501875992", status: "Pending Info",
-    action: "view", completed: false,
+    id: "657227",
+    type: "Τέλος Στάθμευσης",
+    deadline: "20.12.2025",
+    amount: "71.42 €",
+    ref: "RF231862850275937501875992",
+    status: "Pending Info",
+    action: "view",
+    completed: false,
   },
   {
-    id: "657224", type: "Τέλος Στάθμευσης",   deadline: "20.12.2025",
-    amount: "71.42€",
-    ref: "RF231862850275937501875992", status: "Pending Payment",
-    action: "pay", completed: false,
+    id: "657228",
+    type: "Τέλος Στάθμευσης",
+    deadline: "20.12.2025",
+    amount: "71.42 €",
+    ref: "RF231862850275937501875992",
+    status: "Pending Payment",
+    action: "pay",
+    completed: false,
   },
 ];
 
 const PAGE_SIZE = 7;
 
+const getStatusClass = (status: DebtStatus) =>
+  status.toLowerCase().replace(/\s+/g, "-");
+
 export default function Debts() {
   const navigate = useNavigate();
+
   const [tab, setTab] = useState<"active" | "completed">("active");
   const [page, setPage] = useState(1);
 
@@ -67,152 +93,138 @@ export default function Debts() {
     tab === "active" ? !item.completed : item.completed
   );
 
-  const totalPages = Math.ceil(filtered.length / PAGE_SIZE) || 1;
-  const paginated = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
+  const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
 
-  const renderAction = (item: DebtItem) => {
+  const paginated = filtered.slice(
+    (page - 1) * PAGE_SIZE,
+    page * PAGE_SIZE
+  );
+
+  const startEntry = filtered.length === 0 ? 0 : (page - 1) * PAGE_SIZE + 1;
+  const endEntry = Math.min(page * PAGE_SIZE, filtered.length);
+
+  const handleTabChange = (nextTab: "active" | "completed") => {
+    setTab(nextTab);
+    setPage(1);
+  };
+
+  const handleAction = (item: DebtItem) => {
     if (item.action === "pay") {
-      return (
-        <button style={{ ...btnBase, background: "#0077a2", color: "#fff", border: "none" }}>
-          ΠΛΗΡΩΜΗ
-        </button>
-      );
+      console.log("Payment:", item.id);
+      return;
     }
-    if (item.action === "receipt") {
-      return (
-        <button
-          style={{ ...btnBase, background: "#2e7d32", color: "#fff", border: "none" }}
-          onClick={() => navigate(`/debts/${item.id}`)}
-        >
-          ΑΠΟΔΕΙΞΗ
-        </button>
-      );
-    }
-    return (
-      <button style={btnBase} onClick={() => navigate(`/debts/${item.id}`)}>
-        ΠΡΟΒΟΛΗ
-      </button>
-    );
+
+    navigate(`/debts/${item.id}`);
   };
 
   return (
     <div className="main-content">
+      <div className="debt-header">
+        
+        <HeaderTitle title="Οφειλές" type="debts" />
 
-      {/* Title + tabs */}
-      <div style={{ display: "flex", alignItems: "center",
-                    justifyContent: "space-between", marginBottom: 20 }}>
-        <h2 style={{ fontWeight: 700, fontSize: 16, letterSpacing: 2,
-                     color: "#1a2d3d", textTransform: "uppercase" }}>
-          Οφειλές
-        </h2>
-        <div style={{ display: "flex", gap: 4 }}>
-          {(["active", "completed"] as const).map((t) => (
+        <div className="debt-tabs">
+          {(["active", "completed"] as const).map((itemTab) => (
             <button
-              key={t}
-              onClick={() => { setTab(t); setPage(1); }}
-              style={{
-                padding: "6px 20px",
-                border: "none",
-                borderRadius: 20,
-                fontSize: 11,
-                fontWeight: 700,
-                letterSpacing: 1,
-                cursor: "pointer",
-                fontFamily: "'Open Sans', sans-serif",
-                background: tab === t ? "#0077a2" : "transparent",
-                color: tab === t ? "#fff" : "#607080",
-                transition: "all 0.15s",
-              }}
+              key={itemTab}
+              type="button"
+              className={`debt-tab ${
+                tab === itemTab ? "debt-tab--active" : ""
+              }`}
+              onClick={() => handleTabChange(itemTab)}
             >
-              {t === "active" ? "ΕΚΚΡΕΜΕΙΣ" : "ΕΞΟΦΛΗΜΕΝΕΣ"}
+              {itemTab === "active" ? "ΕΚΚΡΕΜΕΙΣ" : "ΕΞΟΦΛΗΜΕΝΕΣ"}
             </button>
           ))}
         </div>
       </div>
 
-      {/* Table */}
-      <div style={{ border: "1px solid #dde3ea", borderRadius: 8,
-                    overflow: "hidden", background: "#fff" }}>
-
-        {/* Header */}
-        <div style={{ display: "grid",
-                      gridTemplateColumns: "80px 1fr 120px 100px 1fr 140px 130px",
-                      background: "#0077a2", padding: "10px 16px", gap: 8 }}>
-          {["ID", "ΕΙΔΟΣ ΤΕΛΟΥΣ", "ΠΡΟΘΕΣΜΙΑ", "ΠΟΣΟ", "RF", "ΚΑΤΑΣΤΑΣΗ", ""].map((col) => (
-            <span key={col} style={{ fontSize: 11, fontWeight: 700,
-                                     color: "#fff", letterSpacing: 1 }}>
-              {col}
-            </span>
-          ))}
-        </div>
-
-        {/* Rows */}
-        {paginated.length === 0 ? (
-          <div style={{ padding: 40, textAlign: "center", color: "#8090a0", fontSize: 14 }}>
-            Δεν υπάρχουν εγγραφές
+      <div className="debt-table-wrap">
+        <div className="debt-table">
+          <div className="debt-row debt-row--head">
+            <span>ID</span>
+            <span>ΕΙΔΟΣ ΤΕΛΟΥΣ</span>
+            <span>ΠΡΟΘΕΣΜΙΑ</span>
+            <span>ΠΟΣΟ</span>
+            <span>RF</span>
+            <span>ΚΑΤΑΣΤΑΣΗ</span>
+            <span />
           </div>
-        ) : (
-          paginated.map((item, i) => (
-            <div
-              key={i}
-              style={{
-                display: "grid",
-                gridTemplateColumns: "80px 1fr 120px 100px 1fr 140px 130px",
-                padding: "12px 16px",
-                gap: 8,
-                alignItems: "center",
-                borderBottom: "1px solid #f0f4f8",
-                background: i % 2 === 0 ? "#fff" : "#fafcfe",
-                transition: "background 0.15s",
-              }}
-            >
-              <span style={{ fontSize: 12, color: "#607080" }}>{item.id}</span>
-              <span style={{ fontSize: 13, fontWeight: 600, color: "#1a2d3d" }}>
-                {item.type}
-              </span>
-              <span style={{ fontSize: 12, color: "#607080" }}>{item.deadline}</span>
-              <span style={{
-                fontSize: 13, fontWeight: 700,
-                color: item.amountHighlight ? "#0077a2" : "#1a2d3d",
-              }}>
-                {item.amount}
-              </span>
-              <span style={{ fontSize: 11, color: "#8090a0",
-                             fontFamily: "'DM Mono', monospace", wordBreak: "break-all" }}>
-                {item.ref}
-              </span>
-              <div>
-                <span style={{
-                  background: STATUS_STYLE[item.status].bg,
-                  color: STATUS_STYLE[item.status].color,
-                  borderRadius: 20, padding: "3px 12px",
-                  fontSize: 11, fontWeight: 700, whiteSpace: "nowrap",
-                }}>
-                  {item.status}
-                </span>
-              </div>
-              <div>{renderAction(item)}</div>
-            </div>
-          ))
-        )}
 
-        {/* Footer */}
-        <div style={{ display: "flex", justifyContent: "space-between",
-                      alignItems: "center", padding: "12px 16px",
-                      borderTop: "1px solid #f0f4f8" }}>
-          <span style={{ fontSize: 12, color: "#8090a0" }}>
-            Εμφάνιση 1 έως {Math.min(PAGE_SIZE, filtered.length)} από {filtered.length} καταχωρήσεις
-          </span>
-          <div style={{ display: "flex", gap: 4 }}>
-            <PageBtn label="‹" onClick={() => setPage(p => Math.max(1, p - 1))}
-                     disabled={page === 1} />
-            {Array.from({ length: totalPages }, (_, i) => (
-              <PageBtn key={i} label={String(i + 1)}
-                       active={page === i + 1}
-                       onClick={() => setPage(i + 1)} />
-            ))}
-            <PageBtn label="›" onClick={() => setPage(p => Math.min(totalPages, p + 1))}
-                     disabled={page === totalPages} />
+          {paginated.length === 0 ? (
+            <div className="debt-empty">Δεν υπάρχουν εγγραφές</div>
+          ) : (
+            paginated.map((item) => (
+              <div key={item.id} className="debt-item">
+                <div className="debt-row">
+                  <span className="debt-id">{item.id}</span>
+
+                  <span className="debt-type">{item.type}</span>
+
+                  <span className="debt-deadline">
+                    <span className="debt-deadline-prefix">Προθεσμία: </span>
+                    {item.deadline}
+                  </span>
+
+                  <span
+                    className={`debt-amount ${
+                      item.amountHighlight ? "debt-amount--highlight" : ""
+                    }`}
+                  >
+                    {item.amount}
+                  </span>
+
+                  <span className="debt-ref">{item.ref}</span>
+
+                  <span className="debt-status-cell">
+                    <span
+                      className={`debt-status debt-status--${getStatusClass(
+                        item.status
+                      )}`}
+                    >
+                      {item.status}
+                    </span>
+                  </span>
+
+                  <ActionButton
+                    type={item.action}
+                    onClick={() => handleAction(item)}
+                  />
+                </div>
+              </div>
+            ))
+          )}
+
+          <div className="debt-footer">
+            <span>
+              Εμφάνιση {startEntry} έως {endEntry} από {filtered.length}{" "}
+              καταχωρήσεις
+            </span>
+
+            <div className="debt-pagination">
+              <PageBtn
+                label="‹"
+                disabled={page === 1}
+                onClick={() => setPage((current) => Math.max(1, current - 1))}
+              />
+
+              {Array.from({ length: totalPages }, (_, i) => (
+                <PageBtn
+                  key={i}
+                  label={String(i + 1)}
+                  active={page === i + 1}
+                  onClick={() => setPage(i + 1)}
+                />
+              ))}
+
+              <PageBtn
+                label="›"
+                disabled={page === totalPages}
+                onClick={() =>
+                  setPage((current) => Math.min(totalPages, current + 1))
+                }
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -220,9 +232,12 @@ export default function Debts() {
   );
 }
 
-// ── Sub-components ─────────────────────────────
-
-function PageBtn({ label, onClick, active, disabled }: {
+function PageBtn({
+  label,
+  onClick,
+  active,
+  disabled,
+}: {
   label: string;
   onClick: () => void;
   active?: boolean;
@@ -230,35 +245,12 @@ function PageBtn({ label, onClick, active, disabled }: {
 }) {
   return (
     <button
+      type="button"
+      className={`page-btn ${active ? "page-btn--active" : ""}`}
       onClick={onClick}
       disabled={disabled}
-      style={{
-        width: 30, height: 30,
-        border: active ? "none" : "1px solid #dde3ea",
-        borderRadius: 6,
-        background: active ? "#0077a2" : "#fff",
-        color: active ? "#fff" : disabled ? "#c5d5e5" : "#3a5068",
-        fontSize: 12, fontWeight: 600,
-        cursor: disabled ? "default" : "pointer",
-        fontFamily: "'Open Sans', sans-serif",
-        transition: "all 0.15s",
-      }}
     >
       {label}
     </button>
   );
 }
-
-const btnBase: React.CSSProperties = {
-  background: "transparent",
-  color: "#0077a2",
-  border: "1.5px solid #0077a2",
-  borderRadius: 6,
-  padding: "5px 14px",
-  fontSize: 11,
-  fontWeight: 700,
-  letterSpacing: 1,
-  cursor: "pointer",
-  fontFamily: "'Open Sans', sans-serif",
-  whiteSpace: "nowrap",
-};

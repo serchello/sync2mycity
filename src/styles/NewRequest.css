@@ -1,0 +1,273 @@
+/* New request */
+
+.request-header {
+  margin-bottom: 20px;
+}
+
+.request-filters {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.request-search {
+  position: relative;
+  flex: 1;
+  max-width: 380px;
+}
+
+.request-search input {
+  width: 100%;
+  padding: 9px 36px 9px 12px;
+  border: 1.5px solid #c5d5e5;
+  border-radius: 6px;
+  background: #fff;
+  color: #3a5068;
+  outline: none;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.request-search svg {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  color: #8090a0;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.request-select {
+  min-width: 160px;
+  padding: 9px 32px 9px 12px;
+  border: 1.5px solid #c5d5e5;
+  border-radius: 6px;
+  background: #fff;
+  color: #3a5068;
+  outline: none;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  cursor: pointer;
+}
+
+.request-table-wrap {
+  border: 1px solid #dde3ea;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.request-table {
+  width: 100%;
+}
+
+.request-row {
+  display: grid;
+  grid-template-columns: 220px minmax(220px, 1fr) 160px 140px;
+  gap: 16px;
+  align-items: start;
+}
+
+.request-row--head {
+  background: #0077a2;
+  padding: 10px 16px;
+}
+
+.request-row--head span {
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+}
+
+.request-group-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  border: none;
+  border-bottom: 1px solid #dde3ea;
+  background: #eaf4f8;
+  cursor: pointer;
+  color: #1a2d3d;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: left;
+}
+
+.request-group-header svg {
+  color: #0077a2;
+  transition: transform 0.2s;
+}
+
+.request-chevron--collapsed {
+  transform: rotate(180deg);
+}
+
+.request-row--body {
+  padding: 14px 16px;
+  border-bottom: 1px solid #f0f4f8;
+  background: #fff;
+  animation: fadeUp 0.25s ease both;
+}
+
+.request-row--body:nth-child(even) {
+  background: #fafcfe;
+}
+
+.request-title {
+  color: #1a2d3d;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.request-description {
+  color: #607080;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.request-type {
+  color: #3a5068;
+  font-size: 12px;
+}
+
+.request-action-btn {
+  height: 30px;
+  border: none;
+  border-radius: 6px;
+  background: #0077a2;
+  color: #fff;
+  padding: 6px 14px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+
+.request-action-btn:hover {
+  background: #005f82;
+}
+
+.request-empty {
+  padding: 40px;
+  text-align: center;
+  color: #8090a0;
+  font-size: 14px;
+}
+
+/* New request tablet */
+
+@media (max-width: 1100px) {
+  .request-row {
+    grid-template-columns: 190px minmax(200px, 1fr) 130px 130px;
+  }
+}
+
+/* New request mobile */
+
+@media (max-width: 768px) {
+  .request-header {
+    margin-bottom: 12px;
+  }
+
+  .request-filters {
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .request-search {
+    max-width: none;
+  }
+
+  .request-select {
+    width: 100%;
+  }
+
+  .request-table-wrap {
+    border: none;
+    border-radius: 0;
+    overflow: visible;
+    background: transparent;
+  }
+
+  .request-table {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .request-row--head {
+    display: none;
+  }
+
+  .request-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .request-group-header {
+    border: 1px solid #dde3ea;
+    border-radius: 7px;
+    background: #eaf4f8;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .request-row--body {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 10px 8px 8px;
+    border: 1px solid #dde3ea;
+    border-radius: 7px;
+    background: #fff !important;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.16);
+  }
+
+  .request-title {
+    order: 1;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.25;
+  }
+
+  .request-description {
+    order: 2;
+    font-size: 10px;
+    line-height: 1.45;
+    color: #607080;
+  }
+
+  .request-type {
+    order: 3;
+    font-size: 10px;
+    color: #3a5068;
+    font-weight: 600;
+  }
+
+  .request-action-btn {
+    order: 4;
+    width: 100%;
+    height: 24px;
+    margin-top: 4px;
+    padding: 3px 10px;
+    border-radius: 4px;
+    font-size: 10px;
+    letter-spacing: 1.8px;
+  }
+
+  .request-empty {
+    border: 1px solid #dde3ea;
+    border-radius: 7px;
+    background: #fff;
+    padding: 24px;
+  }
+}

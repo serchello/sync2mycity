@@ -1,4 +1,4 @@
-export type ActionType = "view" | "pay";
+export type ActionType = "view" | "update" | "pay";
 
 export type Status =
   | "Completed"

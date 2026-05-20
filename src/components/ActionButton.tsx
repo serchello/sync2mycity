@@ -1,34 +1,29 @@
-import type { ActionType } from "../constants/data";
+import "./ActionButton.css";
+
+export type ActionButtonType = "view" | "update" | "pay" | "receipt";
 
 interface Props {
-  type: ActionType;
+  type: ActionButtonType;
+  onClick?: () => void;
 }
 
-export default function ActionButton({ type }: Props) {
-  const isPayment = type === "pay";
+export default function ActionButton({ type, onClick }: Props) {
+  const label =
+    type === "pay"
+      ? "ΠΛΗΡΩΜΗ"
+      : type === "update"
+      ? "ΕΝΗΜΕΡΩΣΗ"
+      : type === "receipt"
+      ? "ΑΠΟΔΕΙΞΗ"
+      : "ΠΡΟΒΟΛΗ";
 
   return (
     <button
-      style={{
-        background: isPayment ? "#0077A2" : "transparent",
-        color: isPayment ? "#fff" : "#0077A2",
-        border: isPayment ? "none" : "1.5px solid #0077A2",
-        borderRadius: 6,
-        padding: "5px 25px",
-        fontSize: 11,
-        fontWeight: 700,
-        cursor: "pointer",
-        letterSpacing: 1.5,
-        marginTop: 10,
-        transition: "opacity 0.18s",
-        width: "150px",
-        height: "32px"
-
-      }}
-      onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.8")}
-      onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
+      type="button"
+      className={`action-btn action-btn--${type}`}
+      onClick={onClick}
     >
-      {isPayment ? "ΠΛΗΡΩΜΗ" : "ΠΡΟΒΟΛΗ"}
+      {label}
     </button>
   );
 }

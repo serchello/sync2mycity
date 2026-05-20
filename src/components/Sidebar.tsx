@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom";
-import { Plus, Home, FileText, Folder, Stamp } from "lucide-react";
+import { Plus, Home, FileText, Wallet, Stamp } from "lucide-react";
 import { NAV_ITEMS } from "../constants/data";
 
-const ICONS = [Plus, Home, FileText, Folder, Stamp];
+const ICONS = [Plus, Home, FileText, Wallet, Stamp];
 
 const NAV_ROUTES = [
   "/new-request",
