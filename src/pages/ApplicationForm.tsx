@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import type { ChangeEvent, DragEvent } from "react";
 import { useNavigate } from "react-router-dom";
-import { CalendarDays, ChevronDown, LayoutPanelLeft, Upload } from "lucide-react";
+import { ChevronDown, LayoutPanelLeft, Upload } from "lucide-react";
 import HeaderTitle from "../ui/HeaderTitle";
 import ActionButton from "../components/ActionButton";
 import "../styles/ApplicationForm.css";

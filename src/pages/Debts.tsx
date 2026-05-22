@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Folder } from "lucide-react";
 import HeaderTitle from "../ui/HeaderTitle";
 import ActionButton, { type ActionButtonType } from "../components/ActionButton";
 import "../styles/Debts.css";
