@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Menu, LogOut, User } from "lucide-react";
 import "./Topbar.css";
+import { useNavigate } from "react-router-dom";
 
 
 interface Props {
@@ -9,13 +10,15 @@ interface Props {
 
 export default function Topbar({ onMenuClick }: Props) {
 
+  const navigate = useNavigate();
+
  const [userMenuOpen, setUserMenuOpen] = useState(false);
 
   const handleLogout = () => {
     console.log("logout");
     // later:
     // localStorage.removeItem("token");
-    // navigate("/login");
+    navigate("/login");
   };
 
 
@@ -25,7 +28,6 @@ export default function Topbar({ onMenuClick }: Props) {
     // navigate("/profile");
   }
 
-  
 
  return (
     <div

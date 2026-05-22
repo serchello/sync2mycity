@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Topbar from "./components/Topbar";
 import Sidebar from "./components/Sidebar";
 
+import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import NewRequest from "./pages/NewRequest";
 import ApplicationForm from "./pages/ApplicationForm";
@@ -17,6 +18,8 @@ function AppLayout() {
   const location = useLocation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
+  const isLoginPage = location.pathname === "/login";
+
   const getActiveIndex = () => {
     if (location.pathname.startsWith("/new-request")) return 0;
     if (location.pathname === "/") return 1;
@@ -27,6 +30,14 @@ function AppLayout() {
     return 1;
   };
 
+
+  if (isLoginPage) {
+    return (
+      <Routes>
+        <Route path="/login" element={<Login />} />
+      </Routes>
+    );
+  }
   return (
     <div className="layout">
       <Topbar onMenuClick={() => setSidebarOpen(true)} />

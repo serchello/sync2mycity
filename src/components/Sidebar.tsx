@@ -40,17 +40,17 @@ export default function Sidebar({ activeIndex, isOpen, onClose }: Props) {
 
       <aside className={`sidebar ${isOpen ? "sidebar--open" : ""}`}>
         <div className="sidebar-mobile-header">
-  <img src="/logo.png" alt="Sync2myCity" className="sidebar-mobile-logo" />
+          <img src="/logo.png" alt="Sync2myCity" className="sidebar-mobile-logo" />
 
-  <button
-    type="button"
-    className="sidebar-close-btn"
-    onClick={onClose}
-    aria-label="Close menu"
-  >
-    <X size={18} />
-  </button>
-</div>
+          <button
+            type="button"
+            className="sidebar-close-btn"
+            onClick={onClose}
+            aria-label="Close menu"
+          >
+            <X size={18} />
+          </button>
+        </div>
 
         {NAV_ITEMS.map((item, index) => {
           const Icon = ICONS[index];
@@ -60,9 +60,8 @@ export default function Sidebar({ activeIndex, isOpen, onClose }: Props) {
             <button
               key={item.label}
               type="button"
-              className={`sidebar-item ${
-                isActive ? "sidebar-item--active" : ""
-              }`}
+              className={`sidebar-item ${isActive ? "sidebar-item--active" : ""
+                }`}
               onClick={() => handleNavigate(NAV_ROUTES[index])}
             >
               <Icon size={17} strokeWidth={1.8} />
