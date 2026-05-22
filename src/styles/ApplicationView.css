@@ -8,9 +8,7 @@
 }
 
 .application-view__title {
-  padding: 20px 24px 16px;
-  border-bottom: 1px solid #dde3ea;
-  background: #fff;
+ padding-bottom: 14px;
 }
 
 .application-view__title .header-title {
@@ -22,15 +20,18 @@
   flex: 1;
   min-height: 0;
   overflow: hidden;
+
 }
 
 .application-view__info {
-  width: 240px;
+  width: 300px;
   flex-shrink: 0;
-  padding: 20px 16px;
+  padding: 14px 12px;
   overflow-y: auto;
   background: #fafcfe;
   border-right: 1px solid #dde3ea;
+  border-radius: 15px;
+  margin:2px 20px 2px 2px;
 }
 
 .application-view__info-row {
@@ -39,16 +40,16 @@
 
 .application-view__info-label {
   margin-bottom: 4px;
-  color: #8090a0;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 1.2px;
+  color: #0077A2;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 1.3px;
   text-transform: uppercase;
 }
 
 .application-view__info-value {
   color: #1a2d3d;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 500;
   line-height: 1.5;
   word-break: break-word;

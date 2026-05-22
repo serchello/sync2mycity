@@ -1,12 +1,34 @@
-import { Menu } from "lucide-react";
+import { useState } from "react";
+import { Menu, LogOut, User } from "lucide-react";
+import "./Topbar.css";
+
 
 interface Props {
   onMenuClick: () => void;
 }
 
 export default function Topbar({ onMenuClick }: Props) {
-  return (
-     <div
+
+ const [userMenuOpen, setUserMenuOpen] = useState(false);
+
+  const handleLogout = () => {
+    console.log("logout");
+    // later:
+    // localStorage.removeItem("token");
+    // navigate("/login");
+  };
+
+
+  const handleProfile = () => {
+    console.log("profile");
+    // later:
+    // navigate("/profile");
+  }
+
+  
+
+ return (
+    <div
       style={{
         background: "#0077A2",
         color: "#fff",
@@ -31,25 +53,33 @@ export default function Topbar({ onMenuClick }: Props) {
         }}
       />
 
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: 8,
-        }}
-      >
-        <div
-          className="desktop-user"
-          style={{
-            fontWeight: 600,
-            fontSize: 14,
-            cursor: "pointer",
-            padding: "6px 12px",
-            borderRadius: 6,
-            letterSpacing: 0.4,
-          }}
-        >
-          ΠΕΤΡΟΣ ΠΑΠΑΔΟΠΟΥΛΟΣ ▾
+      <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+        <div className="desktop-user user-menu">
+          <button
+            type="button"
+            className="user-menu__trigger"
+            onClick={() => setUserMenuOpen((open) => !open)}
+          >
+            ΠΕΤΡΟΣ ΠΑΠΑΔΟΠΟΥΛΟΣ ▾
+          </button>
+
+          {userMenuOpen && (
+            <div className="user-menu__dropdown">
+              <button type="button" className="user-menu__item"  onClick={handleProfile}>
+                <User size={15} />
+                Προφίλ
+              </button>
+
+              <button
+                type="button"
+                className="user-menu__item user-menu__item--danger"
+                onClick={handleLogout}
+              >
+                <LogOut size={15} />
+                Logout
+              </button>
+            </div>
+          )}
         </div>
 
         <button
