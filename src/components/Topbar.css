@@ -1,16 +1,55 @@
+.topbar {
+  height: 67px;
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 28px;
+
+  background: #0077a2;
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(21, 101, 192, 0.18);
+
+  position: relative;
+  z-index: 10;
+}
+
+.topbar-logo {
+  height: 36px;
+  width: auto;
+  object-fit: contain;
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* User dropdown */
+
 .user-menu {
   position: relative;
 }
 
 .user-menu__trigger {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
   border: none;
   border-radius: 6px;
   background: transparent;
   color: #fff;
+
   padding: 6px 12px;
+
   font-size: 14px;
   font-weight: 600;
   letter-spacing: 0.4px;
+
   cursor: pointer;
 }
 
@@ -18,22 +57,59 @@
   background: rgba(255, 255, 255, 0.12);
 }
 
+.user-menu__arrow {
+  font-size: 11px;
+  transition: transform 0.15s;
+}
+
+.user-menu:hover .user-menu__arrow,
+.user-menu:focus-within .user-menu__arrow {
+  transform: rotate(180deg);
+}
+
+/*
+  Important:
+  top: 100% means there is no dead gap between trigger and dropdown.
+  padding-top creates visual spacing without breaking hover.
+*/
 .user-menu__dropdown {
   position: absolute;
-  top: calc(100% + 8px);
+  top: 100%;
   right: 0;
   z-index: 50;
 
   min-width: 180px;
+  padding-top: 10px;
+
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-4px);
+  pointer-events: none;
+
+  transition: opacity 0.15s, transform 0.15s, visibility 0.15s;
+}
+
+.user-menu:hover .user-menu__dropdown,
+.user-menu:focus-within .user-menu__dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.user-menu__dropdown-inner {
+  position: relative;
+
   padding: 6px;
 
   border: 1px solid #dde3ea;
   border-radius: 8px;
   background: #fff;
+
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16);
 }
 
-.user-menu__dropdown::before {
+.user-menu__dropdown-inner::before {
   content: "";
   position: absolute;
   top: -6px;
@@ -45,11 +121,13 @@
   background: #fff;
   border-left: 1px solid #dde3ea;
   border-top: 1px solid #dde3ea;
+
   transform: rotate(45deg);
 }
 
 .user-menu__item {
   width: 100%;
+
   display: flex;
   align-items: center;
   gap: 8px;
@@ -60,9 +138,11 @@
   color: #3a5068;
 
   padding: 9px 10px;
+
   font-size: 13px;
   font-weight: 600;
   text-align: left;
+
   cursor: pointer;
 }
 
@@ -76,4 +156,42 @@
 
 .user-menu__item--danger:hover {
   background: #ffebee;
+}
+
+/* Burger */
+
+.hamburger {
+  display: none;
+  align-items: center;
+  justify-content: center;
+
+  width: 38px;
+  height: 38px;
+
+  border: none;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+
+  cursor: pointer;
+}
+
+.hamburger:hover {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+/* Mobile */
+
+@media (max-width: 768px) {
+  .topbar {
+    padding: 0 16px;
+  }
+
+  .desktop-user {
+    display: none !important;
+  }
+
+  .hamburger {
+    display: flex !important;
+  }
 }
