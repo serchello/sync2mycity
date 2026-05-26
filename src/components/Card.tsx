@@ -1,6 +1,8 @@
 import type { CardItem } from "../constants/data";
 import StatusBadge from "./StatusBadge";
 import ActionButton from "./ActionButton";
+import "./Card.css";
+
 
 interface Props {
   card: CardItem;
@@ -9,10 +11,7 @@ interface Props {
 
 export default function Card({ card, index }: Props) {
   return (
-    <div
-      className="card"
-      style={{ animationDelay: `${index * 0.05}s` }}
-    >
+    <div className="card" style={{ animationDelay: `${index * 0.05}s` }}>
       <div>
         <div className="card-top">
           <div className="card-title-wrap">
