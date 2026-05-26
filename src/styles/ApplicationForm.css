@@ -1,8 +1,13 @@
 /* Application form */
 
 .application-form {
-  max-width: 560px;
+  max-width: 860px;
   margin: 0 auto;
+  border: 1px solid #c5d5e5;
+  border-radius: 8px;
+  padding: 24px;
+  background: #fff;
+
 }
 
 .application-form__header {
@@ -204,18 +209,30 @@
 }
 
 .payment-section {
-  border-top: 1px solid #dde3ea;
-  padding-top: 20px;
+  padding-top: 10px;
   margin-top: 4px;
 }
 
 .payment-section__title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
   margin-bottom: 14px;
-  text-align: center;
-  color: #3a5068;
-  font-size: 12px;
+
+  color: #2e4966;
+  font-size: 14px;
   font-weight: 700;
   letter-spacing: 1.5px;
+  text-align: center;
+}
+
+.payment-section__title::before,
+.payment-section__title::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #6c93c0;
 }
 
 .payment-row {

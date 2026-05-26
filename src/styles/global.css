@@ -222,9 +222,9 @@ textarea {
   min-width: 96px;
 }
 
-.card-action .action-btn {
+{{/* .card-action .action-btn {
   width: 100%;
-}
+} */}}
 
 /* More link */
 

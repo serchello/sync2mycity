@@ -13,9 +13,9 @@ export default function ApplicationForm() {
 
   const [textField, setTextField] = useState("");
   const [dropdown, setDropdown] = useState("");
-const [date, setDate] = useState("2026-05-23");
-const [dateRangeFrom, setDateRangeFrom] = useState("2026-05-22");
-const [dateRangeTo, setDateRangeTo] = useState("2026-05-23");
+  const [date, setDate] = useState("2026-05-23");
+  const [dateRangeFrom, setDateRangeFrom] = useState("2026-05-22");
+  const [dateRangeTo, setDateRangeTo] = useState("2026-05-23");
   const [checkbox, setCheckbox] = useState(false);
   const [textArea, setTextArea] = useState("");
   const [dragOver, setDragOver] = useState(false);
@@ -36,10 +36,6 @@ const [dateRangeTo, setDateRangeTo] = useState("2026-05-23");
     const file = event.target.files?.[0];
     if (file) setFileName(file.name);
   };
-
-
-
-
 
 
 
@@ -122,13 +118,13 @@ const [dateRangeTo, setDateRangeTo] = useState("2026-05-23");
           </FormField>
 
           <FormField label="DATE" required>
-  <input
-    className="form-control form-control--date"
-    type="date"
-    value={date}
-    onChange={(event) => setDate(event.target.value)}
-  />
-</FormField>
+            <input
+              className="form-control form-control--date"
+              type="date"
+              value={date}
+              onChange={(event) => setDate(event.target.value)}
+            />
+          </FormField>
 
           <FormField label="DATE RANGE" required>
             <DateRange
