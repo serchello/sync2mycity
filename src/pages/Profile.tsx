@@ -1,15 +1,23 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import type { ReactNode } from "react";
 import HeaderTitle from "../ui/HeaderTitle";
 import "../styles/Profile.css";
+import { useProfile, useUpdateProfile } from "../hooks/useProfile";
+import type { ProfilePayload } from "../api/profileApi";
+
+const EMPTY_PROFILE: ProfilePayload = {
+  firstName: "",
+  lastName: "",
+  email: "",
+  phone: "",
+  address: "",
+};
 
 export default function Profile() {
-  const [profile, setProfile] = useState({
-    firstName: "Πέτρος",
-    lastName: "Παπαδόπουλος",
-    email: "petros@example.com",
-    phone: "+30 6900000000",
-    address: "Σπάτα, Ελλάδα",
-  });
+  const { data, isLoading, error } = useProfile();
+  const updateProfile = useUpdateProfile();
+
+  const [profile, setProfile] = useState<ProfilePayload>(EMPTY_PROFILE);
 
   const [passwords, setPasswords] = useState({
     currentPassword: "",
@@ -19,7 +27,13 @@ export default function Profile() {
 
   const [saved, setSaved] = useState(false);
 
-  const handleProfileChange = (field: keyof typeof profile, value: string) => {
+  useEffect(() => {
+    if (data) {
+      setProfile(data);
+    }
+  }, [data]);
+
+  const handleProfileChange = (field: keyof ProfilePayload, value: string) => {
     setProfile((prev) => ({
       ...prev,
       [field]: value,
@@ -39,10 +53,14 @@ export default function Profile() {
   };
 
   const handleSaveProfile = () => {
-    console.log("Save profile:", profile);
-
-    // later: call update profile API
-    setSaved(true);
+    updateProfile.mutate(profile, {
+      onSuccess: () => {
+        setSaved(true);
+      },
+      onError: () => {
+        alert("Δεν ήταν δυνατή η αποθήκευση των στοιχείων");
+      },
+    });
   };
 
   const handleChangePassword = () => {
@@ -58,7 +76,6 @@ export default function Profile() {
 
     console.log("Change password:", passwords);
 
-    // later: call change password API
     setPasswords({
       currentPassword: "",
       newPassword: "",
@@ -68,10 +85,33 @@ export default function Profile() {
     alert("Ο κωδικός ενημερώθηκε");
   };
 
+  if (isLoading) {
+    return (
+      <div className="main-content">
+        <div className="profile-page">
+          <HeaderTitle title="Προφίλ Χρήστη" type="profile" />
+          <div className="profile-card">Φόρτωση...</div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="main-content">
+        <div className="profile-page">
+          <HeaderTitle title="Προφίλ Χρήστη" type="profile" />
+          <div className="profile-card">
+            Δεν ήταν δυνατή η φόρτωση του προφίλ.
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="main-content">
       <div className="profile-page">
-
         <div className="profile-header">
           <HeaderTitle title="Προφίλ Χρήστη" type="profile" />
         </div>
@@ -89,7 +129,7 @@ export default function Profile() {
 
             <div className="profile-avatar-block">
               <div className="profile-avatar">
-                {profile.firstName.charAt(0)}
+                {profile.firstName.charAt(0) || "?"}
                 {profile.lastName.charAt(0)}
               </div>
 
@@ -159,8 +199,9 @@ export default function Profile() {
                   type="button"
                   className="profile-btn profile-btn--primary"
                   onClick={handleSaveProfile}
+                  disabled={updateProfile.isPending}
                 >
-                  Αποθήκευση
+                  {updateProfile.isPending ? "Αποθήκευση..." : "Αποθήκευση"}
                 </button>
               </div>
             </div>
@@ -227,7 +268,7 @@ function ProfileField({
   children,
 }: {
   label: string;
-  children: React.ReactNode;
+  children: ReactNode;
 }) {
   return (
     <label className="profile-field">

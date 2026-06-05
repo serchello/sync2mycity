@@ -11,7 +11,7 @@ import ApplicationForm from "./pages/ApplicationForm";
 import Certificates from "./pages/Certificates";
 // import Debts from "./pages/Debts";
 import ApplicationView from "./pages/ApplicationView";
-// import Profile from "./pages/Profile";
+import Profile from "./pages/Profile";
 
 
 import "./styles/global.css";
@@ -67,7 +67,7 @@ function AppLayout() {
 
           
 
-          {/* <Route path="/profile" element={<Profile />} /> */}
+          <Route path="/profile" element={<Profile />} />
 
 
           <Route path="*" element={<Dashboard />} />
