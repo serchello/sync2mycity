@@ -9,8 +9,10 @@ import Dashboard from "./pages/Dashboard";
 import NewRequest from "./pages/NewRequest";
 import ApplicationForm from "./pages/ApplicationForm";
 import Certificates from "./pages/Certificates";
-import Debts from "./pages/Debts";
+// import Debts from "./pages/Debts";
 import ApplicationView from "./pages/ApplicationView";
+// import Profile from "./pages/Profile";
+
 
 import "./styles/global.css";
 
@@ -58,10 +60,15 @@ function AppLayout() {
           <Route path="/certificates" element={<Certificates />} />
           <Route path="/certificates/:id" element={<ApplicationView />} />
 
-          <Route path="/debts" element={<Debts />} />
+          {/* <Route path="/debts" element={<Debts />} />
           <Route path="/debts/:id" element={<ApplicationView />} />
 
-          <Route path="/applications/:id" element={<ApplicationView />} />
+          <Route path="/applications/:id" element={<ApplicationView />} /> */}
+
+          
+
+          {/* <Route path="/profile" element={<Profile />} /> */}
+
 
           <Route path="*" element={<Dashboard />} />
         </Routes>

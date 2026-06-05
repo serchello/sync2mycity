@@ -1,21 +1,26 @@
 .login-page {
   min-height: 100vh;
   background: #f2f2f2;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   padding: 24px;
 }
 
 .login-card {
   width: 100%;
-  max-width: 420px;
+  max-width: 440px;
+
+  border: 1.5px solid #c5d5e5;
   background: #fff;
+  border-radius: 10px;
   padding: 32px 28px 26px;
+
   display: flex;
   flex-direction: column;
   align-items: center;
-  border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
@@ -24,25 +29,109 @@
   max-width: 100%;
   height: auto;
   object-fit: contain;
+
   margin-bottom: 22px;
+}
+
+.auth-tabs {
+  width: 100%;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  padding: 3px;
+  margin-bottom: 20px;
+
+  border-radius: 8px;
+  background: #eaf0f7;
+}
+
+.auth-tab {
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: #607080;
+
+  padding: 9px 12px;
+
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.auth-tab--active {
+  background: #0077a2;
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(21, 101, 192, 0.18);
+}
+
+.auth-form {
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.auth-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.auth-field {
+  width: 100%;
+}
+
+.auth-field label {
+  display: block;
+
+  margin-bottom: 6px;
+
+  color: #3a5068;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.1px;
+  text-transform: uppercase;
+}
+
+.auth-field input {
+  width: 100%;
+
+  border: 1.5px solid #c5d5e5;
+  border-radius: 6px;
+  background: #fff;
+
+  padding: 10px 12px;
+
+  color: #1a2d3d;
+  font-size: 13px;
+  outline: none;
+}
+
+.auth-field input:focus {
+  border-color: #0077a2;
 }
 
 .login-btn {
   width: 100%;
-  max-width: 320px;
   height: 40px;
+
   border: none;
   border-radius: 7px;
+
   background: #0077a2;
   color: #fff;
+
   font-size: 13px;
-  font-weight: 400;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+
   cursor: pointer;
   transition: background 0.18s, transform 0.12s;
-}
-
-.login-btn strong {
-  font-weight: 700;
 }
 
 .login-btn:hover {
@@ -53,6 +142,47 @@
   transform: translateY(1px);
 }
 
+.login-btn--taxisnet {
+  font-weight: 400;
+}
+
+.login-btn--taxisnet strong {
+  font-weight: 700;
+}
+
+.auth-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  color: #8090a0;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #dde3ea;
+}
+
+.auth-switch {
+  border: none;
+  background: transparent;
+  color: #0077a2;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.auth-switch:hover {
+  text-decoration: underline;
+}
+
 @media (max-width: 480px) {
   .login-card {
     padding: 28px 22px 24px;
@@ -60,5 +190,9 @@
 
   .login-logo {
     width: 220px;
+  }
+
+  .auth-row {
+    grid-template-columns: 1fr;
   }
 }

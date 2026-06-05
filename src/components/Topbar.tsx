@@ -15,8 +15,8 @@ export default function Topbar({ onMenuClick }: Props) {
   };
 
   const handleProfile = () => {
-    console.log("profile");
-    // navigate("/profile");
+    //console.log("profile");
+    navigate("/profile");
   };
 
   return (

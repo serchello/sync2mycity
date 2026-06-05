@@ -1,5 +1,5 @@
 import type { LucideIcon } from "lucide-react";
-import { Plus, Home, FileText, Wallet, Stamp } from "lucide-react";
+import { Plus, Home, FileText, Wallet, Stamp, User } from "lucide-react";
 import "./HeaderTitle.css";
 
 type HeaderTitleType =
@@ -7,6 +7,7 @@ type HeaderTitleType =
   | "new-request"
   | "certificates"
   | "debts"
+  | "profile"
   | "default";
 
 interface Props {
@@ -19,6 +20,7 @@ const ICONS: Record<HeaderTitleType, LucideIcon> = {
   "new-request": Plus,
   certificates: FileText,
   debts: Wallet,
+  profile: User,
   default: Stamp,
 };
 
