@@ -9,17 +9,26 @@ export interface ProfilePayload {
   address: string;
 }
 
+
+export interface UpdateProfilePayload {
+  first_name?: string;
+  last_name?: string;
+  address?: string;
+  phone?: string;
+  // user_picture_clear?: boolean;
+  // user_picture?: string;
+}
+
+
+
 export const profileApi = {
   getProfile: async () => {
     const { data } = await api.get<ProfilePayload>("/profile");
     return data;
   },
 
-  updateProfile: async (payload: ProfilePayload) => {
-    const { uid, ...body } = payload;
-
-    const { data } = await api.patch(`/api/user/${uid}`, body);
-
+  updateProfile: async (payload: UpdateProfilePayload) => {
+    const { data } = await api.patch("/api/user/update", payload);
     return data;
   },
 };

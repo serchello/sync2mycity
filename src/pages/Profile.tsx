@@ -77,10 +77,8 @@ export default function Profile() {
 
     updateProfile.mutate(
       {
-        uid: user.uid,
         first_name: profile.first_name,
         last_name: profile.last_name,
-        mail: profile.mail,
         phone: profile.phone,
         address: profile.address,
       },
@@ -255,7 +253,7 @@ export default function Profile() {
                 <input
                   type="email"
                   value={profile.mail}
-                  disabled={!isEditing}
+                  disabled
                   onChange={(event) =>
                     handleProfileChange("mail", event.target.value)
                   }
