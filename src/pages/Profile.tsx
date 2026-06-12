@@ -174,7 +174,7 @@ export default function Profile() {
     <div className="main-content">
       <div className="profile-page">
         <div className="profile-header">
-          <HeaderTitle title="Προφίλ Χρήστη" type="profile" />
+          <HeaderTitle title="Προφιλ Χρηστη" type="profile" />
         </div>
 
         <div className="profile-grid">
@@ -279,13 +279,13 @@ export default function Profile() {
                 />
               </ProfileField>
 
-              <ProfileField label="Ρόλοι">
+              {/* <ProfileField label="Ρόλοι">
                 <input
                   type="text"
                   value={user.roles_target_id || ""}
                   disabled
                 />
-              </ProfileField>
+              </ProfileField> */}
 
               {isEditing && (
                 <div className="profile-actions">
