@@ -1,9 +1,10 @@
 import { api } from "./client";
 
 export interface ProfilePayload {
-  firstName: string;
-  lastName: string;
-  email: string;
+  uid: number;
+  first_name: string;
+  last_name: string;
+  mail: string;
   phone: string;
   address: string;
 }
@@ -15,7 +16,10 @@ export const profileApi = {
   },
 
   updateProfile: async (payload: ProfilePayload) => {
-    const { data } = await api.put<ProfilePayload>("/profile", payload);
+    const { uid, ...body } = payload;
+
+    const { data } = await api.patch(`/api/user/${uid}`, body);
+
     return data;
   },
 };

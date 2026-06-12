@@ -12,7 +12,8 @@ import Certificates from "./pages/Certificates";
 // import Debts from "./pages/Debts";
 import ApplicationView from "./pages/ApplicationView";
 import Profile from "./pages/Profile";
-
+import AuthCallback from "./pages/AuthCallback";
+import OAuthCodeHandler from "./components/OAuthCodeHandler";
 
 import "./styles/global.css";
 
@@ -20,8 +21,11 @@ function AppLayout() {
   const location = useLocation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  const isLoginPage = location.pathname === "/login";
 
+  const isPublicPage =
+    location.pathname === "/login" || location.pathname === "/auth/callback";
+  
+  
   const getActiveIndex = () => {
     if (location.pathname.startsWith("/new-request")) return 0;
     if (location.pathname === "/") return 1;
@@ -33,15 +37,22 @@ function AppLayout() {
   };
 
 
-  if (isLoginPage) {
+  if (isPublicPage) {
     return (
-      <Routes>
-        <Route path="/login" element={<Login />} />
-      </Routes>
+      <>
+        <OAuthCodeHandler />
+
+        <Routes>
+          <Route path="/login" element={<Login />} />
+        </Routes>
+      </>
     );
   }
+  
+
   return (
     <div className="layout">
+      <OAuthCodeHandler />
       <Topbar onMenuClick={() => setSidebarOpen(true)} />
 
       <div className="layout__body">
@@ -69,6 +80,7 @@ function AppLayout() {
 
           <Route path="/profile" element={<Profile />} />
 
+          <Route path="/auth/callback" element={<AuthCallback />} />
 
           <Route path="*" element={<Dashboard />} />
         </Routes>

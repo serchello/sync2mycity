@@ -197,3 +197,28 @@
     width: 100%;
   }
 }
+
+
+
+.profile-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.profile-avatar--image {
+  object-fit: cover;
+}
+
+.profile-avatar-meta {
+  margin-top: 3px;
+  color: #7b8794;
+  font-size: 12px;
+}
+
+.profile-field input:disabled {
+  background: #f5f7fa;
+  color: #52616f;
+  cursor: default;
+  opacity: 1;
+}

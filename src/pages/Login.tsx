@@ -1,75 +1,95 @@
-// import { useNavigate } from "react-router-dom";
-// import "../styles/Login.css";
-
-// export default function Login() {
-
-//   const navigate = useNavigate();
-
-//   const handleLogin = () => {
-//     // later: redirect to TAXISNET / auth endpoint
-//      navigate("/");
-//     console.log("Login with TAXISNET");
-//   };
-
-//   return (
-//     <div className="login-page">
-//       <div className="login-card">
-//         <img src="/login.png" alt="Sync2myCity" className="login-logo" />
-
-//         <button type="button" className="login-btn" onClick={handleLogin}>
-//           Σύνδεση με <strong>TAXISNET</strong>
-//         </button>
-//       </div>
-//     </div>
-//   );
-// }
-
-
-
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { authApi } from "../api/authApi";
+import { useRegister } from "../hooks/useAuth";
 import "../styles/Login.css";
 
 type AuthMode = "login" | "register";
 
 export default function Login() {
-  const navigate = useNavigate();
+
+  const registerMutation = useRegister();
 
   const [mode, setMode] = useState<AuthMode>("login");
 
   const [loginForm, setLoginForm] = useState({
-    email: "",
-    password: "",
+    mail: "",
+    pass: "",
   });
 
   const [registerForm, setRegisterForm] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
+    name: "",
+    mail: "",
+    pass: "",
     confirmPassword: "",
+    first_name: "",
+    last_name: "",
+    address: "",
+    phone: "",
   });
 
   const handleLogin = () => {
-    console.log("Login:", loginForm);
-    navigate("/");
+    window.location.href = authApi.getAuthorizeUrl();
   };
 
   const handleTaxisnetLogin = () => {
-    console.log("Login with TAXISNET");
-    navigate("/");
+    window.location.href = authApi.getAuthorizeUrl();
   };
 
   const handleRegister = () => {
-    if (registerForm.password !== registerForm.confirmPassword) {
+    if (!registerForm.name.trim()) {
+      alert("Συμπληρώστε το username");
+      return;
+    }
+
+    if (!registerForm.mail.trim()) {
+      alert("Συμπληρώστε το email");
+      return;
+    }
+
+    if (!registerForm.pass.trim()) {
+      alert("Συμπληρώστε τον κωδικό");
+      return;
+    }
+
+    if (registerForm.pass !== registerForm.confirmPassword) {
       alert("Οι κωδικοί δεν ταιριάζουν");
       return;
     }
 
-    console.log("Register:", registerForm);
+    registerMutation.mutate(
+      {
+        name: registerForm.mail,
+        mail: registerForm.mail,
+        pass: registerForm.pass,
+        first_name: registerForm.first_name,
+        last_name: registerForm.last_name,
+        address: registerForm.address,
+        phone: registerForm.phone,
+        is_blocked: 0,
+        is_citizen: 1,
+      },
+      {
+        onSuccess: () => {
+          alert("Η εγγραφή ολοκληρώθηκε");
 
-    // later: call register API
-    setMode("login");
+          setRegisterForm({
+            name: "",
+            mail: "",
+            pass: "",
+            confirmPassword: "",
+            first_name: "",
+            last_name: "",
+            address: "",
+            phone: "",
+          });
+
+          setMode("login");
+        },
+        onError: () => {
+          alert("Δεν ήταν δυνατή η εγγραφή");
+        },
+      }
+    );
   };
 
   return (
@@ -104,11 +124,11 @@ export default function Login() {
               <input
                 type="email"
                 placeholder="email@example.com"
-                value={loginForm.email}
+                value={loginForm.mail}
                 onChange={(event) =>
                   setLoginForm((prev) => ({
                     ...prev,
-                    email: event.target.value,
+                    mail: event.target.value,
                   }))
                 }
               />
@@ -119,11 +139,11 @@ export default function Login() {
               <input
                 type="password"
                 placeholder="••••••••"
-                value={loginForm.password}
+                value={loginForm.pass}
                 onChange={(event) =>
                   setLoginForm((prev) => ({
                     ...prev,
-                    password: event.target.value,
+                    pass: event.target.value,
                   }))
                 }
               />
@@ -160,12 +180,12 @@ export default function Login() {
                 <label>Όνομα</label>
                 <input
                   type="text"
-                  placeholder="Πέτρος"
-                  value={registerForm.firstName}
+                  placeholder="First"
+                  value={registerForm.first_name}
                   onChange={(event) =>
                     setRegisterForm((prev) => ({
                       ...prev,
-                      firstName: event.target.value,
+                      first_name: event.target.value,
                     }))
                   }
                 />
@@ -175,12 +195,12 @@ export default function Login() {
                 <label>Επώνυμο</label>
                 <input
                   type="text"
-                  placeholder="Παπαδόπουλος"
-                  value={registerForm.lastName}
+                  placeholder="Last"
+                  value={registerForm.last_name}
                   onChange={(event) =>
                     setRegisterForm((prev) => ({
                       ...prev,
-                      lastName: event.target.value,
+                      last_name: event.target.value,
                     }))
                   }
                 />
@@ -188,15 +208,60 @@ export default function Login() {
             </div>
 
             <div className="auth-field">
-              <label>Email</label>
+              <label>Username</label>
               <input
-                type="email"
-                placeholder="email@example.com"
-                value={registerForm.email}
+                type="text"
+                placeholder="usertest"
+                value={registerForm.name}
                 onChange={(event) =>
                   setRegisterForm((prev) => ({
                     ...prev,
-                    email: event.target.value,
+                    name: event.target.value,
+                  }))
+                }
+              />
+            </div>
+
+            <div className="auth-field">
+              <label>Email</label>
+              <input
+                type="email"
+                placeholder="usertest@local.host"
+                value={registerForm.mail}
+                onChange={(event) =>
+                  setRegisterForm((prev) => ({
+                    ...prev,
+                    mail: event.target.value,
+                  }))
+                }
+              />
+            </div>
+
+            <div className="auth-field">
+              <label>Διεύθυνση</label>
+              <input
+                type="text"
+                placeholder="Address"
+                value={registerForm.address}
+                onChange={(event) =>
+                  setRegisterForm((prev) => ({
+                    ...prev,
+                    address: event.target.value,
+                  }))
+                }
+              />
+            </div>
+
+            <div className="auth-field">
+              <label>Τηλέφωνο</label>
+              <input
+                type="text"
+                placeholder="Phone"
+                value={registerForm.phone}
+                onChange={(event) =>
+                  setRegisterForm((prev) => ({
+                    ...prev,
+                    phone: event.target.value,
                   }))
                 }
               />
@@ -207,11 +272,11 @@ export default function Login() {
               <input
                 type="password"
                 placeholder="••••••••"
-                value={registerForm.password}
+                value={registerForm.pass}
                 onChange={(event) =>
                   setRegisterForm((prev) => ({
                     ...prev,
-                    password: event.target.value,
+                    pass: event.target.value,
                   }))
                 }
               />
@@ -236,8 +301,9 @@ export default function Login() {
               type="button"
               className="login-btn"
               onClick={handleRegister}
+              disabled={registerMutation.isPending}
             >
-              Εγγραφή
+              {registerMutation.isPending ? "Εγγραφή..." : "Εγγραφή"}
             </button>
 
             <button

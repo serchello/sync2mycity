@@ -2,22 +2,34 @@ import { useEffect, useState } from "react";
 import type { ReactNode } from "react";
 import HeaderTitle from "../ui/HeaderTitle";
 import "../styles/Profile.css";
-import { useProfile, useUpdateProfile } from "../hooks/useProfile";
-import type { ProfilePayload } from "../api/profileApi";
+import { useCurrentUser } from "../hooks/useCurrentUser";
+import { useUpdateProfile } from "../hooks/useProfile";
 
-const EMPTY_PROFILE: ProfilePayload = {
-  firstName: "",
-  lastName: "",
-  email: "",
+interface ProfileForm {
+  first_name: string;
+  last_name: string;
+  mail: string;
+  phone: string;
+  address: string;
+}
+
+const EMPTY_PROFILE: ProfileForm = {
+  first_name: "",
+  last_name: "",
+  mail: "",
   phone: "",
   address: "",
 };
 
 export default function Profile() {
-  const { data, isLoading, error } = useProfile();
+  const { data: user, isLoading, error } = useCurrentUser();
   const updateProfile = useUpdateProfile();
 
-  const [profile, setProfile] = useState<ProfilePayload>(EMPTY_PROFILE);
+  const [profile, setProfile] = useState<ProfileForm>(EMPTY_PROFILE);
+  const [initialProfile, setInitialProfile] = useState<ProfileForm>(EMPTY_PROFILE);
+
+  const [isEditing, setIsEditing] = useState(false);
+  const [saved, setSaved] = useState(false);
 
   const [passwords, setPasswords] = useState({
     currentPassword: "",
@@ -25,21 +37,64 @@ export default function Profile() {
     confirmPassword: "",
   });
 
-  const [saved, setSaved] = useState(false);
-
   useEffect(() => {
-    if (data) {
-      setProfile(data);
-    }
-  }, [data]);
+    if (!user) return;
 
-  const handleProfileChange = (field: keyof ProfilePayload, value: string) => {
+    const nextProfile: ProfileForm = {
+      first_name: user.first_name || "",
+      last_name: user.last_name || "",
+      mail: user.mail || "",
+      phone: String(user.phone || ""),
+      address: user.address || "",
+    };
+
+    setProfile(nextProfile);
+    setInitialProfile(nextProfile);
+  }, [user]);
+
+  const handleProfileChange = (field: keyof ProfileForm, value: string) => {
     setProfile((prev) => ({
       ...prev,
       [field]: value,
     }));
 
     setSaved(false);
+  };
+
+  const handleEdit = () => {
+    setIsEditing(true);
+    setSaved(false);
+  };
+
+  const handleCancel = () => {
+    setProfile(initialProfile);
+    setIsEditing(false);
+    setSaved(false);
+  };
+
+  const handleSaveProfile = () => {
+    if (!user) return;
+
+    updateProfile.mutate(
+      {
+        uid: user.uid,
+        first_name: profile.first_name,
+        last_name: profile.last_name,
+        mail: profile.mail,
+        phone: profile.phone,
+        address: profile.address,
+      },
+      {
+        onSuccess: () => {
+          setInitialProfile(profile);
+          setIsEditing(false);
+          setSaved(true);
+        },
+        onError: () => {
+          alert("Δεν ήταν δυνατή η αποθήκευση των στοιχείων");
+        },
+      }
+    );
   };
 
   const handlePasswordChange = (
@@ -50,17 +105,6 @@ export default function Profile() {
       ...prev,
       [field]: value,
     }));
-  };
-
-  const handleSaveProfile = () => {
-    updateProfile.mutate(profile, {
-      onSuccess: () => {
-        setSaved(true);
-      },
-      onError: () => {
-        alert("Δεν ήταν δυνατή η αποθήκευση των στοιχείων");
-      },
-    });
   };
 
   const handleChangePassword = () => {
@@ -109,6 +153,28 @@ export default function Profile() {
     );
   }
 
+  if (!user) {
+    return (
+      <div className="main-content">
+        <div className="profile-page">
+          <HeaderTitle title="Προφίλ Χρήστη" type="profile" />
+          <div className="profile-card">
+            Δεν βρέθηκαν στοιχεία χρήστη.
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  const fullName =
+    `${profile.first_name || ""} ${profile.last_name || ""}`.trim() ||
+    user.name ||
+    "Χρήστης";
+
+  
+  console.log("User data:", user);
+  
+  
   return (
     <div className="main-content">
       <div className="profile-page">
@@ -124,20 +190,39 @@ export default function Profile() {
                 <p>Ενημερώστε τα βασικά στοιχεία του λογαριασμού σας.</p>
               </div>
 
-              {saved && <span className="profile-saved">Αποθηκεύτηκε</span>}
+              <div className="profile-header-actions">
+                {saved && <span className="profile-saved">Αποθηκεύτηκε</span>}
+
+                {!isEditing && (
+                  <button
+                    type="button"
+                    className="profile-btn profile-btn--secondary"
+                    onClick={handleEdit}
+                  >
+                    Επεξεργασία
+                  </button>
+                )}
+              </div>
             </div>
 
             <div className="profile-avatar-block">
-              <div className="profile-avatar">
-                {profile.firstName.charAt(0) || "?"}
-                {profile.lastName.charAt(0)}
-              </div>
+              {user.user_picture ? (
+                <img
+                  src={user.user_picture}
+                  alt={fullName}
+                  className="profile-avatar profile-avatar--image"
+                />
+              ) : (
+                <div className="profile-avatar">
+                  {profile.first_name.charAt(0) || "?"}
+                  {profile.last_name.charAt(0)}
+                </div>
+              )}
 
               <div>
-                <p className="profile-avatar-name">
-                  {profile.firstName} {profile.lastName}
-                </p>
-                <p className="profile-avatar-email">{profile.email}</p>
+                <p className="profile-avatar-name">{fullName}</p>
+                <p className="profile-avatar-email">{profile.mail}</p>
+                <p className="profile-avatar-meta">UID: {user.uid}</p>
               </div>
             </div>
 
@@ -146,9 +231,10 @@ export default function Profile() {
                 <ProfileField label="Όνομα">
                   <input
                     type="text"
-                    value={profile.firstName}
+                    value={profile.first_name}
+                    disabled={!isEditing}
                     onChange={(event) =>
-                      handleProfileChange("firstName", event.target.value)
+                      handleProfileChange("first_name", event.target.value)
                     }
                   />
                 </ProfileField>
@@ -156,9 +242,10 @@ export default function Profile() {
                 <ProfileField label="Επώνυμο">
                   <input
                     type="text"
-                    value={profile.lastName}
+                    value={profile.last_name}
+                    disabled={!isEditing}
                     onChange={(event) =>
-                      handleProfileChange("lastName", event.target.value)
+                      handleProfileChange("last_name", event.target.value)
                     }
                   />
                 </ProfileField>
@@ -167,9 +254,10 @@ export default function Profile() {
               <ProfileField label="Email">
                 <input
                   type="email"
-                  value={profile.email}
+                  value={profile.mail}
+                  disabled={!isEditing}
                   onChange={(event) =>
-                    handleProfileChange("email", event.target.value)
+                    handleProfileChange("mail", event.target.value)
                   }
                 />
               </ProfileField>
@@ -178,6 +266,7 @@ export default function Profile() {
                 <input
                   type="tel"
                   value={profile.phone}
+                  disabled={!isEditing}
                   onChange={(event) =>
                     handleProfileChange("phone", event.target.value)
                   }
@@ -188,22 +277,44 @@ export default function Profile() {
                 <input
                   type="text"
                   value={profile.address}
+                  disabled={!isEditing}
                   onChange={(event) =>
                     handleProfileChange("address", event.target.value)
                   }
                 />
               </ProfileField>
 
-              <div className="profile-actions">
-                <button
-                  type="button"
-                  className="profile-btn profile-btn--primary"
-                  onClick={handleSaveProfile}
-                  disabled={updateProfile.isPending}
-                >
-                  {updateProfile.isPending ? "Αποθήκευση..." : "Αποθήκευση"}
-                </button>
-              </div>
+              <ProfileField label="Ρόλοι">
+                <input
+                  type="text"
+                  value={user.roles_target_id || ""}
+                  disabled
+                />
+              </ProfileField>
+
+              {isEditing && (
+                <div className="profile-actions">
+                  <button
+                    type="button"
+                    className="profile-btn profile-btn--secondary"
+                    onClick={handleCancel}
+                    disabled={updateProfile.isPending}
+                  >
+                    Ακύρωση
+                  </button>
+
+                  <button
+                    type="button"
+                    className="profile-btn profile-btn--primary"
+                    onClick={handleSaveProfile}
+                    disabled={updateProfile.isPending}
+                  >
+                    {updateProfile.isPending
+                      ? "Αποθήκευση..."
+                      : "Αποθήκευση"}
+                  </button>
+                </div>
+              )}
             </div>
           </section>
 

@@ -1,6 +1,10 @@
 import { Menu, LogOut, User } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useCurrentUser } from "../hooks/useCurrentUser";
 import "./Topbar.css";
+import { useLogout } from "../hooks/useAuth";
+import { authApi } from "../api/authApi";
+
 
 interface Props {
   onMenuClick: () => void;
@@ -9,9 +13,23 @@ interface Props {
 export default function Topbar({ onMenuClick }: Props) {
   const navigate = useNavigate();
 
+  const { data: user } = useCurrentUser();
+
+
+  const userName =
+    user?.first_name || user?.last_name
+      ? `${user?.first_name || ""} ${user?.last_name || ""}`.trim()
+        : user?.name || user?.mail || "Χρήστης";
+    
+    
   const handleLogout = () => {
-    // localStorage.removeItem("token");
-    navigate("/login");
+
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("refresh_token");
+    localStorage.removeItem("expires_in");
+    localStorage.removeItem("login_at");
+
+    window.location.href = authApi.getLogoutUrl();
   };
 
   const handleProfile = () => {
@@ -26,7 +44,7 @@ export default function Topbar({ onMenuClick }: Props) {
       <div className="topbar-right">
         <div className="desktop-user user-menu">
           <button type="button" className="user-menu__trigger">
-            ΠΕΤΡΟΣ ΠΑΠΑΔΟΠΟΥΛΟΣ
+            {userName}
             <span className="user-menu__arrow">▾</span>
           </button>
 
