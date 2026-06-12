@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { profileApi, type UpdateProfilePayload  } from "../api/profileApi";
-import { currentUserKeys } from "./useCurrentUser";
+import { profileApi, type UpdateProfilePayload  } from "./profileApi__delete";
+import { currentUserKeys } from "../hooks/useCurrentUser";
 
 export const profileKeys = {
   all: ["profile"] as const,

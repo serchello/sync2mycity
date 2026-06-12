@@ -15,9 +15,27 @@ export interface CurrentUser {
   department_categories_responsible: string | null;
 }
 
+
+export interface UpdateCurrentUserPayload {
+  first_name?: string;
+  last_name?: string;
+  address?: string;
+  phone?: string;
+  // user_picture_clear?: boolean;
+  // user_picture?: string;
+}
+
+
 export const userApi = {
+
   getCurrentUser: async () => {
     const { data } = await api.get<CurrentUser[]>("/api/user");
     return data?.[0] ?? null;
   },
+
+  updateCurrentUser: async (payload: UpdateCurrentUserPayload) => {
+    const { data } = await api.patch("/api/user/update", payload);
+    return data;
+  },
+
 };

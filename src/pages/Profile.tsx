@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import type { ReactNode } from "react";
 import HeaderTitle from "../ui/HeaderTitle";
+import { useCurrentUser, useUpdateCurrentUser } from "../hooks/useCurrentUser";
 import "../styles/Profile.css";
-import { useCurrentUser } from "../hooks/useCurrentUser";
-import { useUpdateProfile } from "../hooks/useProfile";
 
 interface ProfileForm {
   first_name: string;
@@ -23,7 +22,7 @@ const EMPTY_PROFILE: ProfileForm = {
 
 export default function Profile() {
   const { data: user, isLoading, error } = useCurrentUser();
-  const updateProfile = useUpdateProfile();
+  const updateProfile = useUpdateCurrentUser();
 
   const [profile, setProfile] = useState<ProfileForm>(EMPTY_PROFILE);
   const [initialProfile, setInitialProfile] = useState<ProfileForm>(EMPTY_PROFILE);
@@ -115,8 +114,6 @@ export default function Profile() {
       alert("Οι νέοι κωδικοί δεν ταιριάζουν");
       return;
     }
-
-    console.log("Change password:", passwords);
 
     setPasswords({
       currentPassword: "",
