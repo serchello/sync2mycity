@@ -37,6 +37,7 @@ export default function Profile() {
   });
 
   useEffect(() => {
+
     if (!user) return;
 
     const nextProfile: ProfileForm = {
@@ -161,15 +162,8 @@ export default function Profile() {
     );
   }
 
-  const fullName =
-    `${profile.first_name || ""} ${profile.last_name || ""}`.trim() ||
-    user.name ||
-    "Χρήστης";
+  const fullName = `${profile.first_name || ""} ${profile.last_name || ""}`.trim() || user.name || "Χρήστης";
 
-  
-  console.log("User data:", user);
-  
-  
   return (
     <div className="main-content">
       <div className="profile-page">
@@ -228,9 +222,7 @@ export default function Profile() {
                     type="text"
                     value={profile.first_name}
                     disabled={!isEditing}
-                    onChange={(event) =>
-                      handleProfileChange("first_name", event.target.value)
-                    }
+                    onChange={(event) => handleProfileChange("first_name", event.target.value)}
                   />
                 </ProfileField>
 
@@ -239,9 +231,7 @@ export default function Profile() {
                     type="text"
                     value={profile.last_name}
                     disabled={!isEditing}
-                    onChange={(event) =>
-                      handleProfileChange("last_name", event.target.value)
-                    }
+                    onChange={(event) => handleProfileChange("last_name", event.target.value)}
                   />
                 </ProfileField>
               </div>
@@ -251,9 +241,7 @@ export default function Profile() {
                   type="email"
                   value={profile.mail}
                   disabled
-                  onChange={(event) =>
-                    handleProfileChange("mail", event.target.value)
-                  }
+                  onChange={(event) => handleProfileChange("mail", event.target.value)}
                 />
               </ProfileField>
 
@@ -262,9 +250,7 @@ export default function Profile() {
                   type="tel"
                   value={profile.phone}
                   disabled={!isEditing}
-                  onChange={(event) =>
-                    handleProfileChange("phone", event.target.value)
-                  }
+                  onChange={(event) => handleProfileChange("phone", event.target.value)}
                 />
               </ProfileField>
 
@@ -273,9 +259,7 @@ export default function Profile() {
                   type="text"
                   value={profile.address}
                   disabled={!isEditing}
-                  onChange={(event) =>
-                    handleProfileChange("address", event.target.value)
-                  }
+                  onChange={(event) => handleProfileChange("address", event.target.value)}
                 />
               </ProfileField>
 
@@ -304,9 +288,7 @@ export default function Profile() {
                     onClick={handleSaveProfile}
                     disabled={updateProfile.isPending}
                   >
-                    {updateProfile.isPending
-                      ? "Αποθήκευση..."
-                      : "Αποθήκευση"}
+                    {updateProfile.isPending ? "Αποθήκευση..." : "Αποθήκευση"}
                   </button>
                 </div>
               )}
@@ -326,9 +308,7 @@ export default function Profile() {
                 <input
                   type="password"
                   value={passwords.currentPassword}
-                  onChange={(event) =>
-                    handlePasswordChange("currentPassword", event.target.value)
-                  }
+                  onChange={(event) => handlePasswordChange("currentPassword", event.target.value)}
                 />
               </ProfileField>
 
@@ -336,9 +316,7 @@ export default function Profile() {
                 <input
                   type="password"
                   value={passwords.newPassword}
-                  onChange={(event) =>
-                    handlePasswordChange("newPassword", event.target.value)
-                  }
+                  onChange={(event) => handlePasswordChange("newPassword", event.target.value)}
                 />
               </ProfileField>
 
@@ -346,9 +324,7 @@ export default function Profile() {
                 <input
                   type="password"
                   value={passwords.confirmPassword}
-                  onChange={(event) =>
-                    handlePasswordChange("confirmPassword", event.target.value)
-                  }
+                  onChange={(event) => handlePasswordChange("confirmPassword", event.target.value)}
                 />
               </ProfileField>
 
@@ -372,7 +348,7 @@ export default function Profile() {
 function ProfileField({
   label,
   children,
-}: {
+} : {
   label: string;
   children: ReactNode;
 }) {

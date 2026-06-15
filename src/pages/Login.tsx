@@ -11,11 +11,6 @@ export default function Login() {
 
   const [mode, setMode] = useState<AuthMode>("login");
 
-  const [loginForm, setLoginForm] = useState({
-    mail: "",
-    pass: "",
-  });
-
   const [registerForm, setRegisterForm] = useState({
     name: "",
     mail: "",
@@ -101,7 +96,7 @@ export default function Login() {
           <button
             type="button"
             className={`auth-tab ${mode === "login" ? "auth-tab--active" : ""}`}
-            onClick={() => setMode("login")}
+            onClick={handleLogin}
           >
             Σύνδεση
           </button>
@@ -119,39 +114,6 @@ export default function Login() {
 
         {mode === "login" ? (
           <div className="auth-form">
-            <div className="auth-field">
-              <label>Email</label>
-              <input
-                type="email"
-                placeholder="email@example.com"
-                value={loginForm.mail}
-                onChange={(event) =>
-                  setLoginForm((prev) => ({
-                    ...prev,
-                    mail: event.target.value,
-                  }))
-                }
-              />
-            </div>
-
-            <div className="auth-field">
-              <label>Κωδικός</label>
-              <input
-                type="password"
-                placeholder="••••••••"
-                value={loginForm.pass}
-                onChange={(event) =>
-                  setLoginForm((prev) => ({
-                    ...prev,
-                    pass: event.target.value,
-                  }))
-                }
-              />
-            </div>
-
-            <button type="button" className="login-btn" onClick={handleLogin}>
-              Σύνδεση
-            </button>
 
             <div className="auth-divider">
               <span>ή</span>

@@ -2,7 +2,6 @@ import { Menu, LogOut, User } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useCurrentUser } from "../hooks/useCurrentUser";
 import "./Topbar.css";
-import { useLogout } from "../hooks/useAuth";
 import { authApi } from "../api/authApi";
 
 
@@ -13,13 +12,13 @@ interface Props {
 export default function Topbar({ onMenuClick }: Props) {
   const navigate = useNavigate();
 
-  const { data: user } = useCurrentUser();
+  const { data: user, isLoading } = useCurrentUser();
 
-
-  const userName =
-    user?.first_name || user?.last_name
-      ? `${user?.first_name || ""} ${user?.last_name || ""}`.trim()
-        : user?.name || user?.mail || "Χρήστης";
+  const userName = isLoading
+    ? "Φόρτωση..."
+    : user?.first_name || user?.last_name
+    ? `${user?.first_name || ""} ${user?.last_name || ""}`.trim()
+    : user?.name || user?.mail || "";
     
     
   const handleLogout = () => {
@@ -43,9 +42,13 @@ export default function Topbar({ onMenuClick }: Props) {
 
       <div className="topbar-right">
         <div className="desktop-user user-menu">
-          <button type="button" className="user-menu__trigger">
+         <button
+            type="button"
+            className="user-menu__trigger"
+            disabled={isLoading}
+          >
             {userName}
-            <span className="user-menu__arrow">▾</span>
+            {user?.first_name && <span className="user-menu__arrow">▾</span>} 
           </button>
 
           <div className="user-menu__dropdown">

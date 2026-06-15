@@ -13,7 +13,6 @@ export function useExchangeCodeForToken() {
   });
 }
 
-
 export function useLogout() {
   const queryClient = useQueryClient();
 
