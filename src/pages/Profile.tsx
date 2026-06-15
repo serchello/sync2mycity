@@ -294,7 +294,7 @@ export default function Profile() {
               )}
             </div>
           </section>
-
+{/* 
           <section className="profile-card">
             <div className="profile-card__header">
               <div>
@@ -338,7 +338,7 @@ export default function Profile() {
                 </button>
               </div>
             </div>
-          </section>
+          </section> */}
         </div>
       </div>
     </div>
