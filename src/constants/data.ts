@@ -34,9 +34,9 @@ export interface StatusStyle {
 
 export const NAV_ITEMS: NavItem[] = [
   { label: "Νέα Αίτηση",    badge: null },
-  { label: "Αρχική",         badge: null },
+  { label: "Αρχική",        badge: null },
   { label: "Πιστοποιητικά", badge: null },
-  { label: "Οφειλές",       badge: 1    },
+  { label: "Οφειλές",       badge: 2    },
   { label: "Βεβαιώσεις",    badge: null },
 ];
 
@@ -62,7 +62,7 @@ export const CARDS: CardItem[] = [
     status: "Pending Payment",
     amount: "258.63 €",
     deadline: "20.12.2025",
-    ref: "RF231862850275937501875992",
+    ref: "RF231862850275937501875999",
     action: "pay",
   },
   {
