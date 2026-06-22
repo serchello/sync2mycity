@@ -30,11 +30,11 @@ export default function Profile() {
   const [isEditing, setIsEditing] = useState(false);
   const [saved, setSaved] = useState(false);
 
-  const [passwords, setPasswords] = useState({
-    currentPassword: "",
-    newPassword: "",
-    confirmPassword: "",
-  });
+  // const [passwords, setPasswords] = useState({
+  //   currentPassword: "",
+  //   newPassword: "",
+  //   confirmPassword: "",
+  // });
 
   useEffect(() => {
 
@@ -95,35 +95,35 @@ export default function Profile() {
     );
   };
 
-  const handlePasswordChange = (
-    field: keyof typeof passwords,
-    value: string
-  ) => {
-    setPasswords((prev) => ({
-      ...prev,
-      [field]: value,
-    }));
-  };
+  // const handlePasswordChange = (
+  //   field: keyof typeof passwords,
+  //   value: string
+  // ) => {
+  //   setPasswords((prev) => ({
+  //     ...prev,
+  //     [field]: value,
+  //   }));
+  // };
 
-  const handleChangePassword = () => {
-    if (!passwords.currentPassword || !passwords.newPassword) {
-      alert("Συμπληρώστε τα πεδία κωδικού");
-      return;
-    }
+  // const handleChangePassword = () => {
+  //   if (!passwords.currentPassword || !passwords.newPassword) {
+  //     alert("Συμπληρώστε τα πεδία κωδικού");
+  //     return;
+  //   }
 
-    if (passwords.newPassword !== passwords.confirmPassword) {
-      alert("Οι νέοι κωδικοί δεν ταιριάζουν");
-      return;
-    }
+  //   if (passwords.newPassword !== passwords.confirmPassword) {
+  //     alert("Οι νέοι κωδικοί δεν ταιριάζουν");
+  //     return;
+  //   }
 
-    setPasswords({
-      currentPassword: "",
-      newPassword: "",
-      confirmPassword: "",
-    });
+  //   setPasswords({
+  //     currentPassword: "",
+  //     newPassword: "",
+  //     confirmPassword: "",
+  //   });
 
-    alert("Ο κωδικός ενημερώθηκε");
-  };
+  //   alert("Ο κωδικός ενημερώθηκε");
+  // };
 
   if (isLoading) {
     return (
