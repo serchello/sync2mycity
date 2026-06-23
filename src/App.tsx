@@ -15,6 +15,11 @@ import Profile from "./pages/Profile";
 import AuthCallback from "./pages/AuthCallback";
 import OAuthCodeHandler from "./components/OAuthCodeHandler";
 
+
+import DisabledFeeReturnForm from "./pages/forms/DisabledFeeReturnForm";
+import AdminFineObjectionForm from "./pages/forms/AdminFineObjectionForm";
+
+
 import "./styles/global.css";
 
 function AppLayout() {
@@ -67,6 +72,9 @@ function AppLayout() {
 
           <Route path="/new-request" element={<NewRequest />} />
           <Route path="/new-request/:id" element={<ApplicationForm />} />
+          <Route path="/new-request/disabled-fee-return" element={<DisabledFeeReturnForm />} />
+          <Route path="/new-request/admin-fine-objection" element={<AdminFineObjectionForm />} />
+          
 
           <Route path="/certificates" element={<Certificates />} />
           <Route path="/certificates/:id" element={<ApplicationView />} />

@@ -9,6 +9,7 @@ interface RequestItem {
   title: string;
   description: string;
   type: string;
+  formPath?: string;
 }
 
 interface RequestGroup {
@@ -26,6 +27,7 @@ const DATA: RequestGroup[] = [
         description:
           "Torem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos......",
         type: "Πιστοποιητικό",
+        formPath: "/new-request/disabled-fee-return"
       },
       {
         id: "parking-permit-2",
@@ -48,10 +50,11 @@ const DATA: RequestGroup[] = [
     items: [
       {
         id: "objection-1",
-        title: "Αίτηση Ειδικής Άδειας Στάθμευσης",
+        title: "Υποβολή ένστασης για κάθε είδους διοικητικό πρόστιμο",
         description:
           "Torem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.",
-        type: "Βεβαίωση",
+        type: "Ένσταση",
+        formPath: "/new-request/admin-fine-objection"
       },
       {
         id: "objection-2",
@@ -203,7 +206,7 @@ export default function NewRequest() {
                       <button
                         type="button"
                         className="request-action-btn"
-                        onClick={() => navigate(`/new-request/${item.id}`)}
+                        onClick={() => navigate(item.formPath ?? `/new-request/${item.id}`)}
                       >
                         ΝΕΑ ΑΙΤΗΣΗ
                       </button>
